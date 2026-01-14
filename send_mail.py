@@ -21,7 +21,7 @@ def send_email():
     """Send an email using SMTP configuration from environment variables."""
     # Get configuration from environment variables
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
-    smtp_port = int(os.getenv('SMTP_PORT', '587'))
+    smtp_port_str = os.getenv('SMTP_PORT', '587')
     sender_email = os.getenv('SENDER_EMAIL')
     sender_password = os.getenv('SENDER_PASSWORD')
     recipient_email = os.getenv('RECIPIENT_EMAIL')
@@ -30,6 +30,14 @@ def send_email():
     if not sender_email or not sender_password or not recipient_email:
         print("ERROR: Missing required environment variables!")
         print("Please set: SENDER_EMAIL, SENDER_PASSWORD, RECIPIENT_EMAIL")
+        return False
+    
+    # Validate port number
+    try:
+        smtp_port = int(smtp_port_str)
+    except ValueError:
+        print(f"ERROR: Invalid SMTP_PORT value: {smtp_port_str}")
+        print("SMTP_PORT must be a valid integer")
         return False
     
     try:
