@@ -11,6 +11,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import schedule
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 def send_email():
@@ -36,11 +40,10 @@ def send_email():
         message['Subject'] = f"Scheduled Email - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         
         # Email body
-        body = f"""
-        This is an automated email sent at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.
-        
-        This email is part of a scheduled job that runs every 5 minutes.
-        """
+        body = f"""This is an automated email sent at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.
+
+This email is part of a scheduled job that runs every 5 minutes.
+"""
         
         message.attach(MIMEText(body, 'plain'))
         
